@@ -1,5 +1,12 @@
 #okay here we will define functions
 #no calling functions here
+
+
+def PrintBoard:
+	#something
+	pass
+	
+
 def check_rows(board):
     for row in range (0, 3):
         if (board[row][0] == board[row][1] == board[row][2] == "X"):
@@ -31,3 +38,4 @@ def check_board(board):
     result = check_diagonals(board)
     if result != None:
         return result
+
