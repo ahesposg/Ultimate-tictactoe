@@ -1,1 +1,42 @@
 #Here we make the actual code and play the game
+
+
+#first variables
+"""
+PrevTurn
+PrevPlayer
+HiddenBoard = empty
+B1,B2,B3,B4,B5,B6,B7,B8,B9= emptyx9
+"""
+
+
+#TURN PROCESS
+"""
+PrintBoard - func
+print 'its _ players turn (on board _)'
+	this will call on Prev Player and PrevTurn
+
+take board input
+run legal board check
+	thomas dev rn
+	if fails rerun turn
+take space input
+run legal space check
+	this will call on the board input to see if the input space already has a value
+	if fails rerun turn
+
+SPACE IS LEGAL (LFG)
+
+update Prev Turn
+update Prev Player
+
+Update small board_
+check for win on small board _
+			this will call board check
+	if win found -> update hidden board
+				-> check for win on hidden board
+							this will call board check
+					if win found -> print board, print PLAYER _ WON, break
+					if no win found -> run next turn
+	if no win found -> run next turn
+"""
