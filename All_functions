@@ -31,3 +31,31 @@ def check_board(board):
     result = check_diagonals(board)
     if result != None:
         return result
+print("Input board:")
+board = int(input())
+print("Input x coordinate:")
+x = int(input())
+print("Input y coordinate:")
+y = int(input())
+PreviousTurn = list(input())
+
+def CheckLegalBoard(b):
+    if b < 1 or b > 9:
+        print("Illegal board")
+        #call turn
+    else:
+        if str(b) == PreviousTurn[0]:
+            return
+        else:
+            print("Incorrect board, go again")
+            #call turn
+def CheckLegalTurn(x, y):
+    if x < 0 or x > 2 or y < 0 or y < 2:
+        print("Invalid coordinate, go again")
+        #call turn
+    else:
+        if != "":
+            print("Player has already gone there, go again")
+            #call turn
+CheckLegalBoard(board)
+CheckLegalTurn(x, y)
