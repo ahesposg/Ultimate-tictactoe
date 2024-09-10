@@ -3,29 +3,214 @@
 
 
 def PrintBoard(hidden board, B1,B2,B3,B4,B5,B6,B7,B8,B9):
-	"""
-	first line:
-	check if B1 won (in hidden board)
-	if won print BLANK BLANK BLANK
-	else print first line (in B1)
-	repeat for 2 and 3
-	print new line
-	second line:
-	check if B1 won (in hidden board)
-	if won print blank WINNER blank
-	else print second line
-	repeat for 2 and 3
-	print new line
-	third line:
-	check if B1 won (in hidden board)
-	if won print BLANK BLANK BLANK
-	else print third line
-	repeat for 2 and 3
-	print new line
+	#first line
+    if HiddenBoard[0][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B1[0][0]} | {B1[0][1]} | {B1[0][2]} ',end=u'\u2503')
+    if HiddenBoard[0][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B2[0][0]} | {B2[0][1]} | {B2[0][2]} ',end=u'\u2503')
+    if HiddenBoard[0][2] != '':
+        print('           ')
+    else:
+        print(f' {B3[0][0]} | {B3[0][1]} | {B3[0][2]} ')
+    if HiddenBoard[0][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[0][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[0][2] != '':
+        print('           ')
+    else:
+        print('-----------')
 
-	repeat this whole process for second big row
-	and again for third big row
-	"""
+    #second line
+    if HiddenBoard[0][0] != '':
+        print(f'     {winner_of_B1}     ',end=u'\u2503')					#THIS PART NEEDS HELP
+    else:
+        print(f' {B1[1][0]} | {B1[1][1]} | {B1[1][2]} ',end=u'\u2503')
+    if HiddenBoard[0][1] != '':
+        print(f'     {winner_of_B2}     ',end=u'\u2503')					#THIS PART NEEDS HELP
+    else:
+        print(f' {B2[1][0]} | {B2[1][1]} | {B2[1][2]} ',end=u'\u2503')
+    if HiddenBoard[0][2] != '':
+        print(f'     {winner_of_B3}     ')					#THIS PART NEEDS HELP
+    else:
+        print(f' {B3[2][0]} | {B3[2][1]} | {B3[2][2]} ')
+    if HiddenBoard[0][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[0][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[0][2] != '':
+        print('           ')
+    else:
+        print('-----------')
+
+    #third line
+    if HiddenBoard[0][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B1[2][0]} | {B1[2][1]} | {B1[2][2]} ',end=u'\u2503')
+    if HiddenBoard[0][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B2[2][0]} | {B2[2][1]} | {B2[2][2]} ',end=u'\u2503')
+    if HiddenBoard[0][2] != '':
+        print('           ')
+    else:
+        print(f' {B3[2][0]} | {B3[2][1]} | {B3[2][2]} ')
+
+    print(u'\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u25A0\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u25A0\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501')
+
+    #second first line
+    if HiddenBoard[1][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B4[0][0]} | {B4[0][1]} | {B4[0][2]} ',end=u'\u2503')
+    if HiddenBoard[1][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B5[0][0]} | {B5[0][1]} | {B5[0][2]} ',end=u'\u2503')
+    if HiddenBoard[1][2] != '':
+        print('           ')
+    else:
+        print(f' {B6[0][0]} | {B6[0][1]} | {B6[0][2]} ')
+    if HiddenBoard[1][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[1][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[1][2] != '':
+        print('           ')
+    else:
+        print('-----------')
+
+    #second second line
+    if HiddenBoard[1][0] != '':
+        print(f'     {winner_of_B4}     ',end=u'\u2503')					#THIS PART NEEDS HELP
+    else:
+        print(f' {B4[1][0]} | {B4[1][1]} | {B4[1][2]} ',end=u'\u2503')
+    if HiddenBoard[1][1] != '':
+        print(f'     {winner_of_B5}     ',end=u'\u2503')					#THIS PART NEEDS HELP
+    else:
+        print(f' {B5[1][0]} | {B5[1][1]} | {B5[1][2]} ',end=u'\u2503')
+    if HiddenBoard[1][2] != '':
+        print(f'     {winner_of_B6}     ')					#THIS PART NEEDS HELP
+    else:
+        print(f' {B6[2][0]} | {B6[2][1]} | {B6[2][2]} ')
+    if HiddenBoard[1][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[1][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[1][2] != '':
+        print('           ')
+    else:
+        print('-----------')
+
+    #second third line
+    if HiddenBoard[1][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B4[2][0]} | {B4[2][1]} | {B4[2][2]} ',end=u'\u2503')
+    if HiddenBoard[1][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B5[2][0]} | {B5[2][1]} | {B5[2][2]} ',end=u'\u2503')
+    if HiddenBoard[1][2] != '':
+        print('           ')
+    else:
+        print(f' {B6[2][0]} | {B6[2][1]} | {B6[2][2]} ')
+
+    print(u'\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u25A0\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u25A0\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501')
+
+    #third first line
+    if HiddenBoard[2][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B7[0][0]} | {B7[0][1]} | {B7[0][2]} ',end=u'\u2503')
+    if HiddenBoard[2][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B8[0][0]} | {B8[0][1]} | {B8[0][2]} ',end=u'\u2503')
+    if HiddenBoard[2][2] != '':
+        print('           ')
+    else:
+        print(f' {B9[0][0]} | {B9[0][1]} | {B9[0][2]} ')
+    if HiddenBoard[2][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[2][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[2][2] != '':
+        print('           ')
+    else:
+        print('-----------')
+
+    #third second line
+    if HiddenBoard[2][0] != '':
+        print(f'     {winner_of_B7}     ',end=u'\u2503')					#THIS PART NEEDS HELP
+    else:
+        print(f' {B7[1][0]} | {B7[1][1]} | {B7[1][2]} ',end=u'\u2503')
+    if HiddenBoard[2][1] != '':
+        print(f'     {winner_of_B8}     ',end=u'\u2503')					#THIS PART NEEDS HELP
+    else:
+        print(f' {B8[1][0]} | {B8[1][1]} | {B8[1][2]} ',end=u'\u2503')
+    if HiddenBoard[2][2] != '':
+        print(f'     {winner_of_B9}     ')					#THIS PART NEEDS HELP
+    else:
+        print(f' {B9[2][0]} | {B9[2][1]} | {B9[2][2]} ')
+    if HiddenBoard[2][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[2][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[2][2] != '':
+        print('           ')
+    else:
+        print('-----------')
+
+    #third third line
+    if HiddenBoard[2][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B7[2][0]} | {B7[2][1]} | {B7[2][2]} ',end=u'\u2503')
+    if HiddenBoard[2][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B8[2][0]} | {B8[2][1]} | {B8[2][2]} ',end=u'\u2503')
+    if HiddenBoard[2][2] != '':
+        print('           ')
+    else:
+        print(f' {B9[2][0]} | {B9[2][1]} | {B9[2][2]} ')
+
+
+
+
+	#THIS IS THE END OF PRINT BOARD
+
+
 	
 
 def CheckRows(board):
