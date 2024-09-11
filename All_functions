@@ -37,6 +37,8 @@ def CheckBoard(board):
     if result != None:
         return result
 
+def PrintWelcome(PrevTurn,PrevPlayer):
+	
 
 
 
