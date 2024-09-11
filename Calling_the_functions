@@ -42,9 +42,6 @@ B9 = [['','',''],
 CordToBoardDict={(0,0):'B1',(0,1):'B2',(0,2):'B3',
 	(1,0):'B4',(1,1):'B5',(1,2):'B6',
 	(2,0):'B7',(2,1):'B8',(2,2):'B9'}
-BoardToCordDict={'B1':(0,0),'B2':(0,1),'B3':(0,2),
-	'B4':(1,0),'B5':(1,1),'B6':(1,2),
-	'B7':(2,0),'B8':(2,1),'B9':(2,2)}
 InputToBoardDict={'B1':B1,'B2':B2,'B3':B3,
 	'B4':B4,'B5':B5,'B6':B6,
 	'B7':B7,'B8':B8,'B9':B9}
@@ -71,7 +68,7 @@ def turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9):
 		###needs to know space and board input and hidden board###			###NEEDS LOVE
 
 
-	###SPACE CHOICE IS CERTIFIED AS LEGAL###
+###SPACE CHOICE IS CERTIFIED AS LEGAL###
 
 
 	CurTurn=(int(SpaceInputX),int(SpaceInputY))
@@ -79,28 +76,43 @@ def turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9):
 
 	InputToBoardDict[BoardInput][int(SpaceInputX)][int(SpaceInputY)]=CurPlayer
 
-	###PLAY IS MADE###
+###PLAY IS MADE###
 
 
-	###CHECK FOR WINNER###
+###CHECK FOR WINNER###
 	SmallBoardWinner=CheckBoard(InputToBoardDict[BoardInput])
 	if SmallBoardWinner != None:
-		HiddenBoard[CurTurn[0]][CurTurn[1]]=SmallBoardWinner
+		HiddenBoard[PrevTurn[0]][PrevTurn[1]]=SmallBoardWinner		#calling prev turn[0] and prevturn[1] here suffices to find the cords for the board that was just played on (rather than converting BoardInput to a coordinate)
 		BigWinner=CheckBoard(HiddenBoard)
 		if BigWinner != None:
 			PrintBoard(HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
 			print(f'!!!  {CurPlayer} WINS  !!!')
-			break
+			return
+				#jk return happens here at the end of the game#
 
 	
-	###RECURSION STEP###
+###RECURSION STEP###
 	turn_process(CurTurn,CurPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+			###Note how next turn is called with CurTurn and CurPlayer as inputs, but then those are stored as PrevTurn and Prev Player
+			###recursion function, does not return###
 
-	###recursion function, does not return###
 
-###description of turn process###
+
+
+###INITIALIZATION OF GAME###
+	#here we print the initial welcome message, instructions, and call the first round of turn_process
+print('Hello world!')
+print("Welcome to Thomas and Hespos's Ultimate TicTacToe Game!")
+print("Here is a refresher on the rules of Ultimate TicTacToe if you don't know them")
+print('https://www.thegamegal.com/2018/09/01/ultimate-tic-tac-toe/')
+print('Good luck!')
+turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+
+
+
+###description/plan of turn process###
 """
-turn takes as input prev player//first step is to calc CurPlayer, used for rest of turn
+turn takes as input prev player & first step is to calc CurPlayer, used for rest of turn
 PrintBoard - func
 print welcome - func
 
@@ -108,13 +120,13 @@ take board input
 run legal board check
 	thomas dev rn
 	if fails print error message
-	rerun turn
+	rerun turn with same inputs as before (NOTE DIFFERENCE BETWEEN CURPLAYER AND PREVPLAYER AND CURTURN AND PREV TURN)
 take space input (x then y)
 run legal space check 
 	this will call on the board input to see if the input space already has a value
 	if fails
 	print error message
-	rerun turn
+	rerun turn with same inputs as before (NOTE DIFFERENCE BETWEEN CURPLAYER AND PREVPLAYER AND CURTURN AND PREV TURN)
 
 SPACE IS LEGAL (LFG)
 
