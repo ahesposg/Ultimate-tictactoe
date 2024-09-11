@@ -38,7 +38,7 @@ def CheckBoard(board):
         return result
 
 def PrintWelcome(PrevTurn,CurPlayer):
-	CurBoard=BoardDict[PrevTurn]
+	CurBoard=CordToBoardDict[PrevTurn]
 	print(f"It is {CurPlayer}'s turn on board: {CurBoard}")
 	return
 
