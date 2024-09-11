@@ -12,21 +12,30 @@ HiddenBoard = [['','',''],
 B1,B2,B3,B4,B5,B6,B7,B8,B9= HiddenBoard*9
 
 
-
+#USEFUL DICTIONARY#
+BoardDict={(0,0):'B1',(0,1):'B2',(0,2):'B3',
+	(1,0):'B4',(1,1):'B5',(1,2):'B6',
+	(2,0):'B7',(2,1):'B8',(2,2):'B9'}
 
 
 #TURN PROCESS
 
 def turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9):
+	CurPlayer=''#initializing
+	if PrevPlayer=='X':
+		CurPlayer='O'
+	if PrevPlayer=='O':
+		CurPlayer='X'
+
 	PrintBoard(HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
-	WelcomeMessage(PrevTurn,PrevPlayer)
+	WelcomeMessage(PrevTurn,CurPlayer)
 
 	###recursion function, does not return###
+
+###description of turn process###
 """
 PrintBoard - func
-print 'its _ players turn (on board _)'
-	this will call on Prev Player and PrevTurn
-	###THIS IS NOW A FUNC -WelcomeMessage()-
+print welcome - func
 
 take board input
 run legal board check
