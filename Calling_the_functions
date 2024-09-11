@@ -18,8 +18,14 @@ B1,B2,B3,B4,B5,B6,B7,B8,B9= HiddenBoard*9
 #TURN PROCESS
 
 def turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9):
+	CurPlayer=''#initializing
+	if PrevPlayer=='X':
+		CurPlayer='O'
+	if PrevPlayer=='O':
+		CurPlayer='X'
+
 	PrintBoard(HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
-	WelcomeMessage(PrevTurn,PrevPlayer)
+	WelcomeMessage(PrevTurn,CurPlayer)
 
 	###recursion function, does not return###
 """
