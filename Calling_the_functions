@@ -2,19 +2,31 @@
 
 
 #first variables
-"""
-PrevTurn
-PrevPlayer
-HiddenBoard = empty
-B1,B2,B3,B4,B5,B6,B7,B8,B9= emptyx9
-"""
+
+PrevTurn=(board,x,y)
+PrevPlayer='O'
+		#Initiallized as 'O' because 'X' goes first
+HiddenBoard = [['','',''],
+		['','',''],
+		['','','']]
+B1,B2,B3,B4,B5,B6,B7,B8,B9= HiddenBoard*9
+
+
+
 
 
 #TURN PROCESS
+
+def turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9):
+	PrintBoard(HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+	WelcomeMessage(PrevTurn,PrevPlayer)
+
+	###recursion function, does not return###
 """
 PrintBoard - func
 print 'its _ players turn (on board _)'
 	this will call on Prev Player and PrevTurn
+	###THIS IS NOW A FUNC -WelcomeMessage()-
 
 take board input
 run legal board check
