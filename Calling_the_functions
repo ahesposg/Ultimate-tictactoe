@@ -3,7 +3,7 @@
 
 #first variables
 
-PrevTurn=('x','y')
+PrevTurn=(0,0)				#initiallized as 0,0 bc i gotta test shit
 PrevPlayer='O'				#Initiallized as 'O' because 'X' goes first
 HiddenBoard = [['','',''],
 		['','',''],
@@ -37,11 +37,11 @@ def turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9):
 
 	BoardInput=input('Please enter the board:')
 	LegalBoardCheck(BoardInput)
-		###needs to know board input & hidden board & prev turn###
+		###needs to know board input & hidden board & prev turn###			###NEEDS LOVE
 	SpaceInputX=input('Please enter the row:')
 	SpaceInputY=input('Please enter the column:')
 	LegalSpaceCheck(SpaceInput)
-		###needs to know space and board input and hidden board###
+		###needs to know space and board input and hidden board###			###NEEDS LOVE
 
 
 	###SPACE CHOICE IS CERTIFIED AS LEGAL###
