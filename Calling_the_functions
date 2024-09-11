@@ -3,7 +3,7 @@
 
 #first variables
 
-PrevTurn=(board,x,y)
+PrevTurn=(x,y)
 PrevPlayer='O'
 		#Initiallized as 'O' because 'X' goes first
 HiddenBoard = [['','',''],
