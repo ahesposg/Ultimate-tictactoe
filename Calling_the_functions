@@ -3,7 +3,7 @@
 
 #first variables
 
-PrevTurn=(0,0)				#initiallized as 0,0 bc i gotta test shit
+PrevTurn=(0,0)				#initiallized as 0,0 bc i gotta test shit				###CHANGE THIS###
 PrevPlayer='O'				#Initiallized as 'O' because 'X' goes first
 
 HiddenBoard = [['','',''],
