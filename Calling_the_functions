@@ -5,10 +5,37 @@
 
 PrevTurn=(0,0)				#initiallized as 0,0 bc i gotta test shit
 PrevPlayer='O'				#Initiallized as 'O' because 'X' goes first
+
 HiddenBoard = [['','',''],
 		['','',''],
 		['','','']]
-B1,B2,B3,B4,B5,B6,B7,B8,B9= [HiddenBoard]*9
+B1 = [['','',''],
+    ['','',''],
+    ['','','']]
+B2 = [['','',''],
+    ['','',''],
+    ['','','']]
+B3 = [['','',''],
+    ['','',''],
+    ['','','']]
+B4 = [['','',''],
+    ['','',''],
+    ['','','']]
+B5 = [['','',''],
+    ['','',''],
+    ['','','']]
+B6 = [['','',''],
+    ['','',''],
+    ['','','']]
+B7 = [['','',''],
+    ['','',''],
+    ['','','']]
+B8 = [['','',''],
+    ['','',''],
+    ['','','']]
+B9 = [['','',''],
+    ['','',''],
+    ['','','']]
 
 
 #USEFUL DICTIONARIES#
@@ -18,7 +45,7 @@ CordToBoardDict={(0,0):'B1',(0,1):'B2',(0,2):'B3',
 BoardToCordDict={'B1':(0,0),'B2':(0,1),'B3':(0,2),
 	'B4':(1,0),'B5':(1,1),'B6':(1,2),
 	'B7':(2,0),'B8':(2,1),'B9':(2,2)}
-InputToBoardDict={'B1':B1,'B2':B2,'B3':B4,
+InputToBoardDict={'B1':B1,'B2':B2,'B3':B3,
 	'B4':B4,'B5':B5,'B6':B6,
 	'B7':B7,'B8':B8,'B9':B9}
 
@@ -47,19 +74,19 @@ def turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9):
 	###SPACE CHOICE IS CERTIFIED AS LEGAL###
 
 
-	CurTurn=(SpaceInputX,SpaceInputY)
+	CurTurn=(int(SpaceInputX),int(SpaceInputY))
 
 
-	InputToBoardDict[BoardInput][SpaceInputX][SpaceInputY]=CurPlayer
+	InputToBoardDict[BoardInput][int(SpaceInputX)][int(SpaceInputY)]=CurPlayer
 
 	###PLAY IS MADE###
 
 
 	###CHECK FOR WINNER###
-	SmallBoardWinner=BoardCheck(InputToBoardDict[BoardInput])
+	SmallBoardWinner=CheckBoard(InputToBoardDict[BoardInput])
 	if SmallBoardWinner != None:
 		HiddenBoard[CurTurn[0]][CurTurn[1]]=SmallBoardWinner
-		BigWinner=BoardCheck(HiddenBoard)
+		BigWinner=CheckBoard(HiddenBoard)
 		if BigWinner != None:
 			PrintBoard(HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
 			print(f'!!!  {CurPlayer} WINS  !!!')
