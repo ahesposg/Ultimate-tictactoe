@@ -44,7 +44,7 @@ def PrintWelcome(PrevTurn,CurPlayer):
 
 
 
-def PrintBoard(hidden board, B1,B2,B3,B4,B5,B6,B7,B8,B9):
+def PrintBoard(HiddenBoard, B1,B2,B3,B4,B5,B6,B7,B8,B9):
 	#first line
     if HiddenBoard[0][0] != '':
         print('           ',end=u'\u2503')
