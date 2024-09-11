@@ -37,6 +37,10 @@ def CheckBoard(board):
     if result != None:
         return result
 
+def PrintWelcome(PrevTurn,CurPlayer):
+	CurBoard=BoardDict[PrevTurn]
+	print(f"It is {CurPlayer}'s turn on board: {CurBoard}")
+	return
 
 
 
