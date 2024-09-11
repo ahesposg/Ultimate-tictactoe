@@ -3,53 +3,95 @@
 
 #first variables
 
-PrevTurn=(x,y)
-PrevPlayer='O'
-		#Initiallized as 'O' because 'X' goes first
+PrevTurn=('x','y')
+PrevPlayer='O'				#Initiallized as 'O' because 'X' goes first
 HiddenBoard = [['','',''],
 		['','',''],
 		['','','']]
-B1,B2,B3,B4,B5,B6,B7,B8,B9= HiddenBoard*9
+B1,B2,B3,B4,B5,B6,B7,B8,B9= [HiddenBoard]*9
 
 
-#USEFUL DICTIONARY#
-BoardDict={(0,0):'B1',(0,1):'B2',(0,2):'B3',
+#USEFUL DICTIONARIES#
+CordToBoardDict={(0,0):'B1',(0,1):'B2',(0,2):'B3',
 	(1,0):'B4',(1,1):'B5',(1,2):'B6',
 	(2,0):'B7',(2,1):'B8',(2,2):'B9'}
+BoardToCordDict={'B1':(0,0),'B2':(0,1),'B3':(0,2),
+	'B4':(1,0),'B5':(1,1),'B6':(1,2),
+	'B7':(2,0),'B8':(2,1),'B9':(2,2)}
+InputToBoardDict={'B1':B1,'B2':B2,'B3':B4,
+	'B4':B4,'B5':B5,'B6':B6,
+	'B7':B7,'B8':B8,'B9':B9}
 
 
 #TURN PROCESS
 
 def turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9):
-	CurPlayer=''#initializing
+	CurPlayer=''			#initializing
 	if PrevPlayer=='X':
 		CurPlayer='O'
 	if PrevPlayer=='O':
-		CurPlayer='X'
+		CurPlayer='X'		#CurPlayer updated for current turn
 
 	PrintBoard(HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
-	WelcomeMessage(PrevTurn,CurPlayer)
+	PrintWelcome(PrevTurn,CurPlayer)
+
+	BoardInput=input('Please enter the board:')
+	LegalBoardCheck(BoardInput)
+		###needs to know board input & hidden board & prev turn###
+	SpaceInputX=input('Please enter the row:')
+	SpaceInputY=input('Please enter the column:')
+	LegalSpaceCheck(SpaceInput)
+		###needs to know space and board input and hidden board###
+
+
+	###SPACE CHOICE IS CERTIFIED AS LEGAL###
+
+
+	CurTurn=(SpaceInputX,SpaceInputY)
+
+
+	InputToBoardDict[BoardInput][SpaceInputX][SpaceInputY]=CurPlayer
+
+	###PLAY IS MADE###
+
+
+	###CHECK FOR WINNER###
+	SmallBoardWinner=BoardCheck(InputToBoardDict[BoardInput])
+	if SmallBoardWinner != None:
+		HiddenBoard[CurTurn[0]][CurTurn[1]]=SmallBoardWinner
+		BigWinner=BoardCheck(HiddenBoard)
+		if BigWinner != None:
+			PrintBoard(HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+			print(f'!!!  {CurPlayer} WINS  !!!')
+			break
+
+	
+	###RECURSION STEP###
+	turn_process(CurTurn,CurPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
 
 	###recursion function, does not return###
 
 ###description of turn process###
 """
+turn takes as input prev player//first step is to calc CurPlayer, used for rest of turn
 PrintBoard - func
 print welcome - func
 
 take board input
 run legal board check
 	thomas dev rn
-	if fails rerun turn
-take space input
-run legal space check
+	if fails print error message
+	rerun turn
+take space input (x then y)
+run legal space check 
 	this will call on the board input to see if the input space already has a value
-	if fails rerun turn
+	if fails
+	print error message
+	rerun turn
 
 SPACE IS LEGAL (LFG)
 
-update Prev Turn
-update Prev Player
+update CurTurn with space
 
 Update small board_
 check for win on small board _
