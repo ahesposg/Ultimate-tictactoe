@@ -6,6 +6,8 @@ CurTurn = (0, 0)
 CurPlayer = 'X'
 BoardInput = ''
 
+
+<checkstuff>
 def CheckRows(board):
     for row in range (0, 3):
         if (board[row][0] == board[row][1] == board[row][2] == "X"):
@@ -37,6 +39,7 @@ def CheckBoard(board):
     result = CheckDiagonals(board)
     if result != None:
         return result
+</checkstuff>
 
 def LegalBoardCheck(B):
     if B not in InputToBoardDict:
