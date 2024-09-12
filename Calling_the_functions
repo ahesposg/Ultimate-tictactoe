@@ -7,7 +7,6 @@ CurPlayer = 'X'
 BoardInput = ''
 
 
-<checkstuff>
 def CheckRows(board):
     for row in range (0, 3):
         if (board[row][0] == board[row][1] == board[row][2] == "X"):
@@ -39,31 +38,38 @@ def CheckBoard(board):
     result = CheckDiagonals(board)
     if result != None:
         return result
-</checkstuff>
 
-def LegalBoardCheck(B):
-    if B not in InputToBoardDict:
+def LegalBoardCheck(BoardInput, PrevTurn, HiddenBoard):
+    legalboard=None
+	if BoardInput not in InputToBoardDict:
         print("Illegal board, go again")
-        turn_process(CurTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
-    else:
-        if B == CordToBoardDict[CurTurn]:
-            return
-        else:
-            print("Incorrect board, go again")
-            turn_process(CurTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+		legalboard=False
+	if HiddenBoard[PrevTurn[0],PrevTurn[1]) != '':
+		legalboard=True
+	else:
+		if BoardInput != CordToBoardDict[PrevTurn]:
+			print("Wrong board, go again")
+			legalboard=False
+		if BoardInput == CordToBoardDict[PrevTurn]:
+		    legalboard=True
+	return legalboard
 
-def LegalSpaceCheck(x, y):
-    if x == "" or y == "":
-        turn_process(CurTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
-    if x < 0 or x > 2 or y < 0 or y > 2:
+
+def LegalSpaceCheck(BoardInput, SpaceInputX, SpaceInputY):
+	legalspace=None
+    if SpaceInputX == "" or SpaceInputY == "":
         print("Invalid coordinate, go again")
-        turn_process(CurTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
-    else:
-        if InputToBoardDict[BoardInput][x][y] != " ":
-            print("Player has already gone there, go again")
-            turn_process(CurTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
-        else:
-            return
+		legalspace=False
+	elif SpaceInputX < 0 or SpaceInputX > 2 or SpaceInputY < 0 or SpaceInputY > 2:
+        print("Invalid coordinate, go again")
+		legalspace=False
+	elif InputToBoardDict[BoardInput][SpaceInputX][SpaceInputY] != " ":
+        print("Player has already gone there, go again")
+		legalspace=False
+	else:
+		legalspace=True
+	return legalspace
+
 
 def PrintWelcome(PrevTurn,CurPlayer):
     if HiddenBoard[PrevTurn[0]][PrevTurn[1]] != "": # add case for turn 1 where player can go anywhere
@@ -112,7 +118,7 @@ def PrintBoard(HiddenBoard, B1,B2,B3,B4,B5,B6,B7,B8,B9):
     if HiddenBoard[0][2] != '':
         print(f'     {CheckBoard(B3)}     ')		
     else:
-        print(f' {B3[2][0]} | {B3[2][1]} | {B3[2][2]} ')
+        print(f' {B3[1][0]} | {B3[1][1]} | {B3[1][2]} ')
     if HiddenBoard[0][0] != '':
         print('           ',end=u'\u2503')
     else:
@@ -180,7 +186,7 @@ def PrintBoard(HiddenBoard, B1,B2,B3,B4,B5,B6,B7,B8,B9):
     if HiddenBoard[1][2] != '':
         print(f'     {CheckBoard(B6)}     ')	
     else:
-        print(f' {B6[2][0]} | {B6[2][1]} | {B6[2][2]} ')
+        print(f' {B6[1][0]} | {B6[1][1]} | {B6[1][2]} ')
     if HiddenBoard[1][0] != '':
         print('           ',end=u'\u2503')
     else:
@@ -248,7 +254,7 @@ def PrintBoard(HiddenBoard, B1,B2,B3,B4,B5,B6,B7,B8,B9):
     if HiddenBoard[2][2] != '':
         print(f'     {CheckBoard(B9)}     ')		
     else:
-        print(f' {B9[2][0]} | {B9[2][1]} | {B9[2][2]} ')
+        print(f' {B9[1][0]} | {B9[1][1]} | {B9[1][2]} ')
     if HiddenBoard[2][0] != '':
         print('           ',end=u'\u2503')
     else:
@@ -324,10 +330,8 @@ InputToBoardDict={'B1':B1,'B2':B2,'B3':B3,
 
 
 def turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9):
+	IsWinner=False
     switched = False
-    global BoardInput
-    global CurTurn
-    global CurPlayer
     		#CurPlayer updated for current turn
     if PrevPlayer=='X' and switched == False:
         CurPlayer='X'
@@ -337,15 +341,18 @@ def turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9):
         CurPlayer='O'
         PrevPlayer = "X"
         switched = True
+
     PrintBoard(HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
     PrintWelcome(PrevTurn,CurPlayer)
     BoardInput=input('Please enter the board: ')
-    if HiddenBoard[PrevTurn[0]][PrevTurn[1]] == "":
-        LegalBoardCheck(BoardInput)
+    if LegalBoardCheck(BoardInput, PrevTurn, HiddenBoard) == False:
+		turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
     
     SpaceInputX = int(input('Please enter the row: '))
     SpaceInputY = int(input('Please enter the column: '))
-    LegalSpaceCheck(SpaceInputX, SpaceInputY)
+    if LegalSpaceCheck(BoardInput, SpaceInputX, SpaceInputY) == False:
+		turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+
     ###SPACE CHOICE IS CERTIFIED AS LEGAL###
     
     CurTurn=(int(SpaceInputX),int(SpaceInputY))
@@ -360,11 +367,12 @@ def turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9):
 	    if BigWinner != None:
 		    PrintBoard(HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
 		    print(f'!!!  {CurPlayer} WINS  !!!')
-            
+            IsWinner=True
 			#jk return happens here at the end of the game#
     
     ###RECURSION STEP###
-    turn_process(CurTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+	if IsWinner=False:
+    	turn_process(CurTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
 			###Note how next turn is called with CurTurn and CurPlayer as inputs, but then those are stored as PrevTurn and Prev Player
 			###recursion function, does not return###
 
