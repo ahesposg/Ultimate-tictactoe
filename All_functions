@@ -39,23 +39,24 @@ print("Input y coordinate:")
 y = int(input())
 PreviousTurn = list(input())
 
-def CheckLegalBoard(b):
-    if b < 1 or b > 9:
-        print("Illegal board")
-        #call turn
+def LegalBoardCheck(B):
+    if B not in InputToBoardDict:
+        print("Illegal board, go again")
+        turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
     else:
-        if str(b) == PreviousTurn[0]:
+        if str(b) == PrevTurn:
             return
+        if CordToBoardDict[
         else:
             print("Incorrect board, go again")
-            #call turn
-def CheckLegalTurn(x, y):
+            turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+def LegalSpaceCheck(x, y):
     if x < 0 or x > 2 or y < 0 or y < 2:
         print("Invalid coordinate, go again")
-        #call turn
+        turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
     else:
         if != "":
             print("Player has already gone there, go again")
-            #call turn
+            turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
 CheckLegalBoard(board)
 CheckLegalTurn(x, y)
