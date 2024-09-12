@@ -1,1 +1,447 @@
-#Here we make the actual code and play the game
+# main.py
+# Project title: (Choose a cool title that describes your project) 
+# Your name:
+# Your partner's name:
+
+# You may create more files as needed
+#first variables
+
+PrevTurn=('', '')			#initiallized as 0,0 bc i gotta test shit				###CHANGE THIS###
+PrevPlayer='X'				#Initiallized as 'O' because 'X' goes first
+
+
+
+def CheckRows(board):
+    for row in range (0, 3):
+        if (board[row][0] == board[row][1] == board[row][2] == "X"):
+            return "X"
+        elif (board[row][0] == board[row][1] == board[row][2] == "O"):
+            return "O"
+def CheckColumns(board):
+    for col in range (0, 3):
+        if (board[0][col] == board[1][col] == board[2][col] == "X"):
+            return "X"
+        elif (board[0][col] == board[1][col] == board[2][col] == "O"):
+            return "O"
+def CheckDiagonals(board):
+    if board[0][0] == board[1][1] == board[2][2] == "X":
+        return "X"
+    if board[0][2] == board[1][1] == board[2][0] == "X":
+        return "X"
+    if board[0][0] == board[1][1] == board[2][2] == "O":
+        return "O"
+    if board[0][2] == board[1][1] == board[2][0] == "O":
+        return "O"
+def CheckBoard(board):
+    result = CheckRows(board)
+    if result != None:
+        return result
+    result = CheckColumns(board)
+    if result != None:
+        return result
+    result = CheckDiagonals(board)
+    if result != None:
+        return result
+
+def LegalBoardCheck(BoardInput, PrevTurn, HiddenBoard):
+    legalboard=None
+    if BoardInput not in InputToBoardDict:
+        print("Illegal board, go again")
+        legalboard=False
+    elif PrevTurn == ('', ''):
+        legalboard = True
+    elif HiddenBoard[PrevTurn[0]][PrevTurn[1]] != '':
+        print('That board has already been won, play somewhere else')
+        legalboard=False
+    else:
+        if BoardInput != CordToBoardDict[PrevTurn]:
+            print("Wrong board, go again")
+            legalboard=False
+        if BoardInput == CordToBoardDict[PrevTurn]:
+            legalboard=True
+    return legalboard
+
+
+def LegalSpaceCheck(BoardInput, SpaceInputX, SpaceInputY):
+    legalspace=None
+    if SpaceInputX < 0 or SpaceInputX > 2 or SpaceInputY < 0 or SpaceInputY > 2:
+        print("Invalid coordinate, go again")
+        legalspace=False
+    elif InputToBoardDict[BoardInput][SpaceInputX][SpaceInputY] != " ":
+        print("Player has already gone there, go again")
+        legalspace=False
+    else:
+        legalspace=True
+    return legalspace
+
+
+def PrintWelcome(PrevTurn,CurPlayer):
+    if PrevTurn==('',''):
+        print(f"It is {CurPlayer}'s turn on any board")
+    elif HiddenBoard[PrevTurn[0]][PrevTurn[1]] != "": # add case for turn 1 where player can go anywhere
+        print(f"It is {CurPlayer}'s turn on any board")
+    else:
+        CurBoard=CordToBoardDict[PrevTurn]
+        print(f"It is {CurPlayer}'s turn on board: {CurBoard}")
+        return
+
+def PrintBoard(HiddenBoard, B1,B2,B3,B4,B5,B6,B7,B8,B9):
+	#first line
+    if HiddenBoard[0][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B1[0][0]} | {B1[0][1]} | {B1[0][2]} ',end=u'\u2503')
+    if HiddenBoard[0][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B2[0][0]} | {B2[0][1]} | {B2[0][2]} ',end=u'\u2503')
+    if HiddenBoard[0][2] != '':
+        print('           ')
+    else:
+        print(f' {B3[0][0]} | {B3[0][1]} | {B3[0][2]} ')
+    if HiddenBoard[0][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[0][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[0][2] != '':
+        print('           ')
+    else:
+        print('-----------')
+
+    #second line
+    if HiddenBoard[0][0] != '':
+        print(f'     {CheckBoard(B1)}     ',end=u'\u2503')	
+    else:
+        print(f' {B1[1][0]} | {B1[1][1]} | {B1[1][2]} ',end=u'\u2503')
+    if HiddenBoard[0][1] != '':
+        print(f'     {CheckBoard(B2)}     ',end=u'\u2503')		
+    else:
+        print(f' {B2[1][0]} | {B2[1][1]} | {B2[1][2]} ',end=u'\u2503')
+    if HiddenBoard[0][2] != '':
+        print(f'     {CheckBoard(B3)}     ')		
+    else:
+        print(f' {B3[1][0]} | {B3[1][1]} | {B3[1][2]} ')
+    if HiddenBoard[0][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[0][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[0][2] != '':
+        print('           ')
+    else:
+        print('-----------')
+
+    #third line
+    if HiddenBoard[0][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B1[2][0]} | {B1[2][1]} | {B1[2][2]} ',end=u'\u2503')
+    if HiddenBoard[0][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B2[2][0]} | {B2[2][1]} | {B2[2][2]} ',end=u'\u2503')
+    if HiddenBoard[0][2] != '':
+        print('           ')
+    else:
+        print(f' {B3[2][0]} | {B3[2][1]} | {B3[2][2]} ')
+
+    print(u'\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u25A0\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u25A0\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501')
+
+    #second first line
+    if HiddenBoard[1][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B4[0][0]} | {B4[0][1]} | {B4[0][2]} ',end=u'\u2503')
+    if HiddenBoard[1][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B5[0][0]} | {B5[0][1]} | {B5[0][2]} ',end=u'\u2503')
+    if HiddenBoard[1][2] != '':
+        print('           ')
+    else:
+        print(f' {B6[0][0]} | {B6[0][1]} | {B6[0][2]} ')
+    if HiddenBoard[1][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[1][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[1][2] != '':
+        print('           ')
+    else:
+        print('-----------')
+
+    #second second line
+    if HiddenBoard[1][0] != '':
+        print(f'     {CheckBoard(B4)}     ',end=u'\u2503')			
+    else:
+        print(f' {B4[1][0]} | {B4[1][1]} | {B4[1][2]} ',end=u'\u2503')
+    if HiddenBoard[1][1] != '':
+        print(f'     {CheckBoard(B5)}     ',end=u'\u2503')	
+    else:
+        print(f' {B5[1][0]} | {B5[1][1]} | {B5[1][2]} ',end=u'\u2503')
+    if HiddenBoard[1][2] != '':
+        print(f'     {CheckBoard(B6)}     ')	
+    else:
+        print(f' {B6[1][0]} | {B6[1][1]} | {B6[1][2]} ')
+    if HiddenBoard[1][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[1][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[1][2] != '':
+        print('           ')
+    else:
+        print('-----------')
+
+    #second third line
+    if HiddenBoard[1][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B4[2][0]} | {B4[2][1]} | {B4[2][2]} ',end=u'\u2503')
+    if HiddenBoard[1][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B5[2][0]} | {B5[2][1]} | {B5[2][2]} ',end=u'\u2503')
+    if HiddenBoard[1][2] != '':
+        print('           ')
+    else:
+        print(f' {B6[2][0]} | {B6[2][1]} | {B6[2][2]} ')
+
+    print(u'\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u25A0\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u25A0\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501')
+
+    #third first line
+    if HiddenBoard[2][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B7[0][0]} | {B7[0][1]} | {B7[0][2]} ',end=u'\u2503')
+    if HiddenBoard[2][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B8[0][0]} | {B8[0][1]} | {B8[0][2]} ',end=u'\u2503')
+    if HiddenBoard[2][2] != '':
+        print('           ')
+    else:
+        print(f' {B9[0][0]} | {B9[0][1]} | {B9[0][2]} ')
+    if HiddenBoard[2][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[2][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[2][2] != '':
+        print('           ')
+    else:
+        print('-----------')
+
+    #third second line
+    if HiddenBoard[2][0] != '':
+        print(f'     {CheckBoard(B7)}     ',end=u'\u2503')		
+    else:
+        print(f' {B7[1][0]} | {B7[1][1]} | {B7[1][2]} ',end=u'\u2503')
+    if HiddenBoard[2][1] != '':
+        print(f'     {CheckBoard(B8)}     ',end=u'\u2503')		
+    else:
+        print(f' {B8[1][0]} | {B8[1][1]} | {B8[1][2]} ',end=u'\u2503')
+    if HiddenBoard[2][2] != '':
+        print(f'     {CheckBoard(B9)}     ')		
+    else:
+        print(f' {B9[1][0]} | {B9[1][1]} | {B9[1][2]} ')
+    if HiddenBoard[2][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[2][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print('-----------',end=u'\u2503')
+    if HiddenBoard[2][2] != '':
+        print('           ')
+    else:
+        print('-----------')
+
+    #third third line
+    if HiddenBoard[2][0] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B7[2][0]} | {B7[2][1]} | {B7[2][2]} ',end=u'\u2503')
+    if HiddenBoard[2][1] != '':
+        print('           ',end=u'\u2503')
+    else:
+        print(f' {B8[2][0]} | {B8[2][1]} | {B8[2][2]} ',end=u'\u2503')
+    if HiddenBoard[2][2] != '':
+        print('           ')
+    else:
+        print(f' {B9[2][0]} | {B9[2][1]} | {B9[2][2]} ')
+
+	
+
+	#THIS IS THE END OF PRINT BOARD
+
+
+HiddenBoard = [['','',''],
+	['','',''],
+	['','','']]
+B1 = [[' ',' ',' '],
+    [' ',' ',' '],
+    [' ',' ',' ']]
+B2 = [[' ',' ',' '],
+    [' ',' ',' '],
+    [' ',' ',' ']]
+B3 = [[' ',' ',' '],
+    [' ',' ',' '],
+    [' ',' ',' ']]
+B4 = [[' ',' ',' '],
+    [' ',' ',' '],
+    [' ',' ',' ']]
+B5 = [[' ',' ',' '],
+    [' ',' ',' '],
+    [' ',' ',' ']]
+B6 = [[' ',' ',' '],
+    [' ',' ',' '],
+    [' ',' ',' ']]
+B7 = [[' ',' ',' '],
+    [' ',' ',' '],
+    [' ',' ',' ']]
+B8 = [[' ',' ',' '],
+    [' ',' ',' '],
+    [' ',' ',' ']]
+B9 = [[' ',' ',' '],
+    [' ',' ',' '],
+    [' ',' ',' ']]
+
+#USEFUL DICTIONARIES#
+CordToBoardDict={(0,0):'B1',(0,1):'B2',(0,2):'B3',
+	(1,0):'B4',(1,1):'B5',(1,2):'B6',
+	(2,0):'B7',(2,1):'B8',(2,2):'B9'}
+InputToBoardDict={'B1':B1,'B2':B2,'B3':B3,
+	'B4':B4,'B5':B5,'B6':B6,
+	'B7':B7,'B8':B8,'B9':B9}
+
+#TURN PROCESS
+
+
+def turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9):
+    IsWinner=False
+    switched = False
+    #CurPlayer updated for current turn
+    if PrevPlayer=='X' and switched == False:
+        CurPlayer='X'
+        PrevPlayer = "O"
+        switched = True
+    if PrevPlayer == "O"  and switched == False:
+        CurPlayer='O'
+        PrevPlayer = "X"
+        switched = True
+
+    PrintBoard(HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+    PrintWelcome(PrevTurn,CurPlayer)
+    BoardInput=input('Please enter the board: ')
+    if LegalBoardCheck(BoardInput, PrevTurn, HiddenBoard) == False:
+        turn_process(PrevTurn,CurPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+    
+    SpaceInputX = input('Please enter the row: ')
+    SpaceInputY = input('Please enter the column: ')
+    if SpaceInputX=='' or SpaceInputY=='':
+        print('Invalid coordinate, go again')
+        turn_process(PrevTurn,CurPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+    SpaceInputX=int(SpaceInputX)
+    SpaceInputY=int(SpaceInputY)
+    if LegalSpaceCheck(BoardInput, SpaceInputX, SpaceInputY) == False:
+        turn_process(PrevTurn,CurPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+
+    ###SPACE CHOICE IS CERTIFIED AS LEGAL###
+    
+    CurTurn=(int(SpaceInputX),int(SpaceInputY))
+    InputToBoardDict[BoardInput][int(SpaceInputX)][int(SpaceInputY)]=CurPlayer
+    
+    ###PLAY IS MADE###
+    ###CHECK FOR WINNER###
+    SmallBoardWinner=CheckBoard(InputToBoardDict[BoardInput])
+    if SmallBoardWinner != None:
+        HiddenBoard[PrevTurn[0]][PrevTurn[1]]=SmallBoardWinner		#calling prev turn[0] and prevturn[1] here suffices to find the cords for the board that was just played on (rather than converting BoardInput to a coordinate)
+        BigWinner=CheckBoard(HiddenBoard)
+        if BigWinner != None:
+            PrintBoard(HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+            print(f'!!!  {CurPlayer} WINS  !!!')
+            IsWinner=True
+			#jk return happens here at the end of the game#
+    
+    ###RECURSION STEP###
+    if IsWinner==False:
+    	turn_process(CurTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+			###Note how next turn is called with CurTurn and CurPlayer as inputs, but then those are stored as PrevTurn and Prev Player
+			###recursion function, does not return###
+
+
+
+###INITIALIZATION OF GAME###
+	#here we print the initial welcome message, instructions, and call the first round of turn_process
+print('Hello world!')
+print("Welcome to Thomas and Hespos's Ultimate TicTacToe Game!")
+print("Here is a refresher on the rules of Ultimate TicTacToe if you don't know them")
+print('https://www.thegamegal.com/2018/09/01/ultimate-tic-tac-toe/')
+print("Here's an explanation of the board and coordinate system we use for gameplay:")
+print(" B1 | B2 | B3")
+print("--------------")
+print(" B4 | B5 | B6")
+print("--------------")
+print(" B7 | B8 | B9")
+print("           Columns")
+print("         0    1    2")
+print("     0     |    |   ")
+print("       --------------")
+print("Rows 1     |    |   ")
+print("       --------------")
+print("     2     |    |   ")
+print('Good luck!')
+turn_process(PrevTurn,PrevPlayer,HiddenBoard,B1,B2,B3,B4,B5,B6,B7,B8,B9)
+
+
+                                
+###description/plan of turn process###
+"""
+turn takes as input prev player & first step is to calc CurPlayer, used for rest of turn
+PrintBoard - func
+print welcome - func
+
+take board input
+run legal board check
+	thomas dev rn
+	if fails print error message
+	rerun turn with same inputs as before (NOTE DIFFERENCE BETWEEN CURPLAYER AND PREVPLAYER AND CURTURN AND PREV TURN)
+take space input (x then y)
+run legal space check 
+	this will call on the board input to see if the input space already has a value
+	if fails
+	print error message
+	rerun turn with same inputs as before (NOTE DIFFERENCE BETWEEN CURPLAYER AND PREVPLAYER AND CURTURN AND PREV TURN)
+
+SPACE IS LEGAL (LFG)
+
+update CurTurn with space
+
+Update small board_
+check for win on small board _
+			this will call board check
+	if win found -> update hidden board
+				-> check for win on hidden board
+							this will call board check
+					if win found -> print board, print PLAYER _ WON, break
+					if no win found -> run next turn
+	if no win found -> run next turn
+"""
